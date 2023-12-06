@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 using HtmlAgilityPack;
-using Microsoft.Playwright;
+
 using Parser.Parser.GoodSorted;
 using Parser.utlis;
 
@@ -112,9 +112,6 @@ public class ProductParser
                                              $"price: {ItemWrapper.price}\n"  + $"description: {goods.description}\n" + $"bonus percent: {ItemWrapper.bonusPercent}\n" + $"bonus amount: {ItemWrapper.bonusAmount}\n";
                             Console.WriteLine(message);
                             
-
-                        
-                        
                         }
                     }
                 }
