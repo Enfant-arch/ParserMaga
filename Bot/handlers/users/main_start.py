@@ -71,8 +71,7 @@ async def send_user_message(message: types.Message, state: FSMContext):
                            "▶ Введите /start")
 
 
-# Проверка на доступность покупок
-@dp.message_handler(IsBuy(), text="👛 Купить", state="*")
+@dp.message_handler(IsBuy(), text="🤖 Парсинг", state="*")
 @dp.message_handler(IsBuy(), state=StorageUsers.here_input_count_buy_item)
 @dp.callback_query_handler(IsBuy(), text_startswith=prohibit_buy, state="*")
 async def send_user_message(message, state: FSMContext):

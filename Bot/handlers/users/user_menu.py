@@ -23,7 +23,7 @@ def split_messages(get_list, count):
 
 
 # Обработка кнопки "Купить"
-@dp.message_handler(text="👛 Купить", state="*")
+@dp.message_handler(text="🤖 Парсинг", state="*")
 @rate_limit(2)
 async def show_search(message: types.Message, state: FSMContext):
     await state.finish()

@@ -5,7 +5,7 @@ import filters
 import middlewares
 import logging
 from handlers import dp
-from utils.db_api.psql  import create_bdx, process_crypto_payments
+from utils.db_api.psql  import create_bdx, process_timer
 from utils.other_func import on_startup_notify, update_last_profit, check_update_bot, update_profit, update_notifical_payment
 from utils.set_bot_commands import set_default_commands
 
