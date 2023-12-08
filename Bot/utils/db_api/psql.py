@@ -27,18 +27,11 @@ cursor = connection.cursor()
 
 
 ###payment_notification
-async def process_crypto_payments():
-    cursor.execute("SELECT * FROM storage_crypto_payment WHERE status = 0")
-    rows = cursor.fetchall()
-    for row in rows:
-        address, user_id, user_login, status, currency, except_value, unix_time = row
-        lost = unix_time - datetime.datetime.timestamp(datetime.datetime.now())
-        if (str(lost).startswith("-")):
-            update_payment_crypto(user_id=user_id, currency=currency, status=1)
-        else:  
-            kb  = InlineKeyboardMarkup().add(InlineKeyboardButton(text="❌Отменить оплту", callback_data=f"cancelCP:{user_id}-{currency}"))
-            await bot.send_message(chat_id=user_id, text=f"⚠️✌️ **У вас неоплаченный платеж**\nВ `{except_value}` **{str(currency).upper()}**\nНа `{address}`", parse_mode=ParseMode.MARKDOWN, reply_markup=kb)
-    
+async def process_timer():
+    pass    
+
+
+
 
 def logger(statement):
     logging.basicConfig(
@@ -183,7 +176,7 @@ def get_payment_crypto(user_id, what_select, **kwargs):
 def get_settingsx():
     get_response = cursor.execute("SELECT * FROM storage_settings")
     get_response = get_response.fetchone()
-    return get_response
+    return get_response 
 
 
 

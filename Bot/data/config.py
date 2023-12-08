@@ -2,14 +2,14 @@
 import configparser
 
 config = configparser.ConfigParser()
-config.read("settings.ini")
+config.read("settings.ini", encoding='utf-8')
 BOT_TOKEN = config["settings"]["token"]
 main_admin = config["settings"]["main_admin"]
 bot_description = config["settings"]["bot_description"]
 
 
 pay = configparser.ConfigParser()
-pay.read("settings.ini")
+pay.read("settings.ini", encoding="utf-8")
 
 curency =  "RUB "
 change_hwid_price = 250

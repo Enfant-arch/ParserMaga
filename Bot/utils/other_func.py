@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 from admin_panel.entities.admin import Admin
 from data.config import bot_version, bot_description
 from loader import bot
-from utils.db_api.psql import get_settingsx, update_settingsx, process_crypto_payments
+from utils.db_api.psql import get_settingsx, update_settingsx, process_timer
 
 
 
@@ -84,7 +84,7 @@ async def update_last_profit():
 
 async def update_notifical_payment():
     while True:
-        await process_crypto_payments()
+        await process_timer()
         await asyncio.sleep(600)
         
 
