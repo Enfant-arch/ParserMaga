@@ -53,6 +53,70 @@ public class ProductParser
 
         });
     }
+    public async Task ParseProductAsync(string url)
+    {
+        await _browserManager.UseBrowserAsync(async (context) =>
+        {
+            try
+            {
+                Console.WriteLine($"URL PARSING OF : {url}");
+                
+                var page = await context.NewPageAsync();
+                Random random = new Random();
+                int pause = random.Next(500, 800);
+                int counter = 1;
+                await Task.Delay(pause);
+                await page.GotoAsync(url);
+                await Task.Delay(pause);
+                var element = await page.ContentAsync();
+                var parsed = await  Get_Content(element);
+                while((parsed == true) && (counter <= 5))
+                {
+                    counter++;
+                    url += $"page-{counter}";
+                    await Task.Delay(pause);
+                    await page.GotoAsync(url);
+                    await Task.Delay(pause);
+                    Console.WriteLine($"Parsing next page [{counter}] - {url}");
+                    parsed = await  Get_Content(element);
+                }
+
+                await page.CloseAsync();
+
+            }
+            catch (TimeoutException exception)
+            {
+                Console.WriteLine($"Can't load : {url} - TIMEOUT EXCEPTION");
+            }
+
+        });
+    }
+    public async Task<bool> ParseProductQueryAsync(string url, string FileName)
+    {
+        await _browserManager.UseBrowserAsync(async (context) =>
+        {
+            try
+            {
+                Console.WriteLine($"URL PARSING OF : {url}");
+                
+                var page = await context.NewPageAsync();
+                Random random = new Random();
+                int pause = random.Next(500, 800);
+                await Task.Delay(pause);
+                await page.GotoAsync(url);
+                await Task.Delay(pause);
+                var element = await page.ContentAsync();
+                await page.CloseAsync();
+                return await Get_Content(element);
+            }
+            catch (TimeoutException exception)
+            {
+                Console.WriteLine($"Can't load : {url} - TIMEOUT EXCEPTION");
+
+            }
+
+        });
+    }
 
     public static async Task<bool> Get_Content(string element)
     {

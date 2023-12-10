@@ -2,6 +2,7 @@ from aiogram import types
 from aiogram.dispatcher.filters import BoundFilter
 from utils import get_settingsx
 from utils.db_api.psql  import get_userx
+import logging
 from admin_panel.entities.admin import Admin
 
 # Проверка на написания сообщения в ЛС бота
@@ -14,7 +15,7 @@ class IsPrivate(BoundFilter):
 class IsBuy(BoundFilter):
     async def check(self, message: types.Message):
         get_settings = get_settingsx()
-        if get_settings[3] == "True" or int(message.from_user.id) in Admin.admins():
+        if get_settings[3] == True or int(message.from_user.id) in Admin.admins():
             return False
         else:
             return True
@@ -24,7 +25,7 @@ class IsBuy(BoundFilter):
 class IsWork(BoundFilter):
     async def check(self, message: types.Message):
         get_settings = get_settingsx()
-        if get_settings[2] == "True" or int(message.from_user.id) in Admin.admins():
+        if get_settings[2] == True or int(message.from_user.id) in Admin.admins():
             return False
         else:
             return True

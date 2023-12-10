@@ -3,9 +3,11 @@ from aiogram.types import InlineKeyboardButton
 
 
 
-your_offers = InlineKeyboardButton("🔍 По названию", callback_data='my_buy')
-referal_program = InlineKeyboardButton("МЕГА-КЕШБЕК", callback_data="my_licence")
-promo_method = InlineKeyboardButton("", callback_data="promoBy")
+by_name = InlineKeyboardButton("🔍 По названию", callback_data='by:query')
+by_catalog = InlineKeyboardButton("🗂 По категории", callback_data='by:category')
+megaCashe= InlineKeyboardButton("💸 МЕГА-КЕШБЕК", callback_data="by:cachback")
 toHome = InlineKeyboardButton("⬅ На главную", callback_data="Home")
-UpBalance = InlineKeyboardButton("💸Пополнить баланс", callback_data='upBalance')
-profile_InlineBoard = InlineKeyboardMarkup(row_width=1).add(your_offers, UpBalance, promo_method, toHome)
+parsing_InlineBoard = InlineKeyboardMarkup(row_width=1).add(by_name, by_catalog, megaCashe, toHome)
+
+back = InlineKeyboardButton("⬅ Назад", callback_data="parser:back")
+select_parsing_Inline = InlineKeyboardMarkup(row_width=1).add(back)

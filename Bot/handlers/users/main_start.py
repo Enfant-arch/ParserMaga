@@ -22,13 +22,14 @@ prohibit_buy = ["xbuy_item", "not_buy_items", "buy_this_item", "buy_open_positio
 @dp.message_handler(IsWork(), state="*")
 @dp.callback_query_handler(IsWork(), state="*")
 async def send_work_message(message: types.Message, state: FSMContext):
+    x = IsWork()
+    print(await x.check(message=message))
     if "id" in message:
         await message.answer("🔴 Бот находится на технических работах.")
     else:
         await message.answer("<b>🔴 Бот находится на технических работах.</b>")
 
 
-# Обработка кнопки "На главную" и команды "/start"
 @dp.message_handler(text="⬅ На главную", state="*")
 @rate_limit(2)
 @dp.callback_query_handler(lambda x: x.data == "Home")
@@ -54,12 +55,8 @@ async def bot_start(message: types.Message, state: FSMContext):
             if message.from_user.username.lower() != get_user_id[2]:
                 update_userx(get_user_id[1], user_login=message.from_user.username.lower())
 
-    await message.answer("<b>🤖 Доброго времени суток</b>\n"
-                         "🟢 Если не появились вспомогательные кнопки\n"
-                         "▶ Введите <code>/start</code>",
-                         reply_markup= await check_user_out_func(message.from_user.id))
     
-    await bot.send_sticker(chat_id=message.from_user.id, sticker=r"CAACAgIAAxkBAAEKx-FlWjKf5fXdS8_udIZkFo6TfS1K7AACQhAAAjPFKUmQDtQRpypKgjME")
+    await bot.send_sticker(chat_id=message.from_user.id, sticker=r"CAACAgIAAxkBAAEK8Ehldb3DRiGrHhLoTyIgTFrruKQMdgACCEIAAirHmErye5nvt3dE_TME", reply_markup = await check_user_out_func(message.from_user.id))
 
 
 @dp.message_handler(IsUser(), state="*")

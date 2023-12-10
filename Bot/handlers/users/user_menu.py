@@ -11,6 +11,7 @@ from aiogram.types import CallbackQuery
 from middlewares.throttling import rate_limit
 from keyboards.default import check_user_out_func, all_back_to_main_default
 from keyboards.inline import *
+from keyboards.inline.parsing import parsing_InlineBoard
 from keyboards.inline.inline_page import *
 from loader import dp, bot
 from states.state_users import *
@@ -22,17 +23,15 @@ def split_messages(get_list, count):
     return [get_list[i:i + count] for i in range(0, len(get_list), count)]
 
 
-# Обработка кнопки "Купить"
-@dp.message_handler(text="👛 Купить", state="*")
+dp.callback_query_handler(lambda x: x.data == "parser:back", state="*")
 @rate_limit(2)
+@dp.message_handler(text="🤖 Парсинг", state="*")
 async def show_search(message: types.Message, state: FSMContext):
     await state.finish()
-    get_categories = get_all_categoriesx()
-    if len(get_categories) >= 1:
-        get_kb = buy_item_open_category_ap(0)
-        await message.answer("<b>👇 Выберите нужный вам товар 📦:</b>", reply_markup=get_kb)
-    else:
-        await message.answer("<b>🛒 Товары в данное время отсутствуют. 😔</b>")
+    await bot.send_photo( chat_id=message.from_user.id,
+        photo="https://berikod.ru/storage/images/blog/5084d11bbc53b92cd741629a97603fc1_700x350.png", 
+        caption="Найдите нужные вам товары с хорошим кешбеком\n<b>👇 Выберите вариант :</b>", reply_markup=parsing_InlineBoard)
+        
 
 
 # Обработка кнопки "Профиль"

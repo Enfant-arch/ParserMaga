@@ -6,11 +6,11 @@ from utils.db_api.psql  import get_settingsx
 def get_settings_func():
     get_settings = get_settingsx()
     settings_default = ReplyKeyboardMarkup(resize_keyboard=True)
-    if get_settings[3] == "True":
+    if get_settings[3] == True:
         status_buy = "🔴 Выключить покупки"
     else:
         status_buy = "🟢 Включить покупки"
-    if get_settings[2] == "True":
+    if get_settings[2] == True:
         status_work = "🔴 Отправить на тех. работы"
     else:
         status_work = "🟢 Вывести из тех. работ"
