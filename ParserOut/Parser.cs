@@ -12,7 +12,7 @@ public class Parser
         var browserManager = new BrowserManager();
         var parser = new ProductParser(browserManager);
         string url = $"https://megamarket.ru/catalog/?q={query}";
-        parser.ParseProductQueryAsync(url, database.FileName).GetAwaiter().GetResult();
+        parser.(url, database.FileName).GetAwaiter().GetResult();
 
     }
 }

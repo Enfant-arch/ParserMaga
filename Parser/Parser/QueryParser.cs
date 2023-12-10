@@ -6,21 +6,22 @@ using Parser.utlis;
 
 namespace Parser.Parser;
 
-public class ProductParser
+public class QueryParser
 {
     private BrowserManager _browserManager;
 
-    public ProductParser(BrowserManager browserManager)
+    public QueryParser(BrowserManager browserManager)
     {
         _browserManager = browserManager;
     }
     
-    public async Task ParseProductAsync(string url)
+    public async Task<bool> ParseProductAsync(string query)
     {
         await _browserManager.UseBrowserAsync(async (context) =>
         {
             try
             {
+                string url = $"https://megamarket.ru/catalog/?q={query}";
                 Console.WriteLine($"URL PARSING OF : {url}");
                 
                 var page = await context.NewPageAsync();
@@ -35,23 +36,26 @@ public class ProductParser
                 while((parsed == true) && (counter <= 5))
                 {
                     counter++;
-                    url += $"page-{counter}";
+                    url = $"https://megamarket.ru/catalog/" + $"page-{counter}" + $"/?q={query}";
                     await Task.Delay(pause);
                     await page.GotoAsync(url);
                     await Task.Delay(pause);
                     Console.WriteLine($"Parsing next page [{counter}] - {url}");
                     parsed = await  Get_Content(element);
                 }
+                
 
                 await page.CloseAsync();
-
+        
             }
             catch (TimeoutException exception)
             {
-                Console.WriteLine($"Can't load : {url} - TIMEOUT EXCEPTION");
+                Console.WriteLine($"Can't load : {query} - TIMEOUT EXCEPTION");
+                return false;
             }
 
         });
+        return true;
     }
     
 
