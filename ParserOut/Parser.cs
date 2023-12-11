@@ -10,9 +10,10 @@ public class Parser
         var file = File.Create(Path.Combine(Directory.GetCurrentDirectory(), $"{query}-{DateTime.Now.ToString()}"));
         database.FileName = file.Name;
         var browserManager = new BrowserManager();
-        var parser = new ProductParser(browserManager);
+        var parser = new QueryParser(browserManager);
         string url = $"https://megamarket.ru/catalog/?q={query}";
-        parser.(url, database.FileName).GetAwaiter().GetResult();
+        parser.ParseProductAsync(url).GetAwaiter().GetResult();
+        return "string";
 
     }
 }

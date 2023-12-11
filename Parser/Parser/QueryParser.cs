@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using HtmlAgilityPack;
 
 using Parser.Parser.GoodSorted;
@@ -51,7 +52,7 @@ public class QueryParser
             catch (TimeoutException exception)
             {
                 Console.WriteLine($"Can't load : {query} - TIMEOUT EXCEPTION");
-                return false;
+                
             }
 
         });
@@ -111,11 +112,20 @@ public class QueryParser
                         Good goods = ItemWrapper.DeserializeGood();
                         if (goods != null && (ItemWrapper.bonusPercent >= 10 || ItemWrapper.oldPriceChangePercentage >= 10))
                         {
+                            using (var file = new FileStream(Global.database.FileName, FileMode.Append))
+                            {
+                                string message = $"Goods ID: {goods.goodsId}\n" + $"Title: {goods.title}\n" +
+                                                 $"Title Image: {goods.titleImage}\n" + $"webUrl: {goods.webUrl}\n" +
+                                                 $"webUrl: {goods.webUrl}\n" + $"price: {ItemWrapper.price}\n" +
+                                                 $"price: {ItemWrapper.price}\n" +
+                                                 $"description: {goods.description}\n" +
+                                                 $"bonus percent: {ItemWrapper.bonusPercent}\n" +
+                                                 $"bonus amount: {ItemWrapper.bonusAmount}\n";
+                                Console.WriteLine(message);
+                                file.WriteAsync(Encoding.UTF8.GetBytes(message), 0, message.Length);
+                            }
+
                             
-                            string message = $"Goods ID: {goods.goodsId}\n" + $"Title: {goods.title}\n" +
-                                             $"Title Image: {goods.titleImage}\n" + $"webUrl: {goods.webUrl}\n" + $"webUrl: {goods.webUrl}\n" + $"price: {ItemWrapper.price}\n" +
-                                             $"price: {ItemWrapper.price}\n"  + $"description: {goods.description}\n" + $"bonus percent: {ItemWrapper.bonusPercent}\n" + $"bonus amount: {ItemWrapper.bonusAmount}\n";
-                            Console.WriteLine(message);
                             
                         }
                     }
