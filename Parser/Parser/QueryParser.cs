@@ -64,19 +64,13 @@ public class QueryParser
     {
         HtmlDocument doc = new HtmlDocument();
         doc.LoadHtml(element);
-        if (CheckForBad(doc))
-        {
-            await BrowserManager.advancedGenerationUrl(doc);
-            return false;
-            
-        }
-
-        else
+        if (!CheckForBad(doc))
         {
             await ParseAndSendData(doc);
             return true;
             
         }
+        else return false;
     }
 
 
